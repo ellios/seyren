@@ -69,28 +69,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.eclipse.jetty</groupId>
-                                    <artifactId>jetty-runner</artifactId>
-                                    <version>${org.eclipse.jetty.version}</version>
-                                    <destFileName>jetty-runner.jar</destFileName>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jslint-maven-plugin</artifactId>
                 <executions>
@@ -109,25 +87,63 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.1</version>
-                <executions>
-                    <execution>
-                        <id>tomcat-run</id>
-                        <goals>
-                            <goal>exec-war-only</goal>
-                        </goals>
-                        <phase>package</phase>
-                        <configuration>
-                          <path>/</path>
-                        </configuration>
-                    </execution>
-                </executions>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.1.0.v20131115</version>
+
                 <configuration>
-                    <port>8080</port>
-                    <path>/seyren</path>
+                    <httpConnector>
+                        <port>8102</port>
+                        <idleTimeout>60000</idleTimeout>
+                    </httpConnector>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                        <tempDirectory>${project.build.directory}/work</tempDirectory>
+                    </webApp>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>MONGO_URL</name>
+                            <value>mongodb://10.10.131.28:27017/seyren</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>GRAPHITE_URL</name>
+                            <value>http://10.121.74.9:11830</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SMTP_HOST</name>
+                            <value>smtp.qiyi.com</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SMTP_FROM</name>
+                            <value>service@qiyi.com</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SEYREN_FROM_EMAIL</name>
+                            <value>service@qiyi.com</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SMTP_USERNAME</name>
+                            <value>sysservice</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SMTP_PASSWORD</name>
+                            <value>Qiyi@123</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SMS_URL</name>
+                            <value>http://api.msg.qiyi.domain:2800/sendMsgAll/</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SMS_USERNAME</name>
+                            <value>wangranyang</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>SMS_USERKEY</name>
+                            <value>pbkdf2_sha256$10000$icrjISRG1drr$dHE6r2QGUsbsfhIG3CnmzM9rDSSBVrbi7bWMmIakitE=</value>
+                        </systemProperty>
+                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>

@@ -72,6 +72,10 @@ public class SeyrenConfig {
     private final String snmpCommunity;
     private final String snmpOID;
 
+    private final String smsUrl;
+    private final String smsUsername;
+    private final String smsUserKey;
+
     public SeyrenConfig() {
         
         // Base
@@ -129,6 +133,10 @@ public class SeyrenConfig {
         this.snmpPort = Integer.parseInt(configOrDefault("SNMP_PORT", "162"));
         this.snmpCommunity = configOrDefault("SNMP_COMMUNITY", "public");
         this.snmpOID = configOrDefault("SNMP_OID", "1.3.6.1.4.1.32473.1");
+
+        this.smsUrl = configOrDefault("SMS_URL", "");
+        this.smsUsername = configOrDefault("SMS_USERNAME", "");
+        this.smsUserKey = configOrDefault("SMS_USERKEY", "");
 
     }
     
@@ -340,6 +348,21 @@ public class SeyrenConfig {
     @JsonIgnore
     public int getGraphiteSocketTimeout() {
         return graphiteSocketTimeout;
+    }
+
+    @JsonIgnore
+    public String getSmsUrl() {
+        return smsUrl;
+    }
+
+    @JsonIgnore
+    public String getSmsUsername() {
+        return smsUsername;
+    }
+
+    @JsonIgnore
+    public String getSmsUserKey() {
+        return smsUserKey;
     }
 
     private static String configOrDefault(String propertyName, String defaultValue) {
